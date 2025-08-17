@@ -1,0 +1,41 @@
+<!-- chatbot_app/templates/chatbot_app/chat.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKIT-Bot</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="{% static 'chatbot_app/css/chat_style.css' %}">
+</head>
+<body>
+    <h1>SKIT-Bot Assistant</h1>
+    <div id="chat-container">
+        <!-- 
+            THIS IS THE KEY CHANGE!
+            We loop through the history from the view and print it out.
+            This makes the chat persistent on refresh.
+        -->
+        {% if not chat_history %}
+            <div class="message bot-message">Hello! How can I help you with information about SKIT today?</div>
+        {% else %}
+            {% for message in chat_history %}
+                {% if message.role == 'user' %}
+                    <div class="message user-message">{{ message.parts.0 }}</div>
+                {% else %}
+                    <div class="message bot-message">{{ message.parts.0 }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    <form id="input-form">
+        {% csrf_token %}
+        <input type="text" id="question-input" name="message" placeholder="Ask a question about SKIT..." autocomplete="off" autofocus>
+        <button type="submit" id="submit-btn">Send</button>
+    </form>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="{% static 'chatbot_app/js/chat_script.js' %}"></script>
+</body>
+</html>
