@@ -1,11 +1,24 @@
 // static/js/chat_script.js
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Configure marked.js
+    marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        mangle: false
+    });
+
     const chatContainer = document.getElementById('chat-container');
     const form = document.getElementById('input-form');
     const input = document.getElementById('question-input');
     const submitBtn = document.getElementById('submit-btn');
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    // Process existing messages to render markdown
+    document.querySelectorAll('.bot-message').forEach(el => {
+        el.innerHTML = marked.parse(el.textContent);
+    });
 
     // Scroll to the bottom of the chat on page load
     chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -40,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const data = await response.json();
-            // Update the placeholder with the actual answer
-            thinkingMessage.textContent = data.answer;
+            // Update the placeholder with the actual answer and render markdown
+            thinkingMessage.innerHTML = marked.parse(data.answer);
 
         } catch (error) {
             thinkingMessage.textContent = 'Sorry, something went wrong. Please try again.';
@@ -56,7 +69,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function addMessage(text, className) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', className);
-        messageDiv.textContent = text;
+        
+        if (className === 'bot-message') {
+            // For bot messages, we'll render markdown
+            messageDiv.innerHTML = marked.parse(text);
+        } else {
+            // For user messages, just use text content
+            messageDiv.textContent = text;
+        }
+        
         chatContainer.appendChild(messageDiv);
         chatContainer.scrollTop = chatContainer.scrollHeight;
         return messageDiv;

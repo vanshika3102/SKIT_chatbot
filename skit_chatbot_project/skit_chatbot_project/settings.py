@@ -117,6 +117,22 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Markdown settings
+MARKDOWN_DEUX_STYLES = {
+    'default': {
+        'extras': {
+            'code-friendly': None,
+            'fenced-code-blocks': True,
+            'break-on-newline': True,
+            'footnotes': True,
+            'header-ids': True,
+            'tables': True,
+            'toc': True,
+        },
+        'safe_mode': False,
+    },
+}
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

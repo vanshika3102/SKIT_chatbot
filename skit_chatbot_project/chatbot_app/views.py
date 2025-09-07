@@ -28,6 +28,7 @@ def chat_view(request):
             # 2. Search the index with the rewritten query
             context = chatbot_logic.search_combined_index(standalone_question)
 
+            # print(f"qqqqqqqqqqqqqqqq:{context}")
             # 3. Get the final answer from Gemini, providing the original question and history
             answer = chatbot_logic.ask_gemini(context, user_question, history)
 

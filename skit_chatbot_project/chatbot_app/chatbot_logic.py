@@ -32,7 +32,7 @@ try:
 
     # Configure the Gemini client
     genai.configure(api_key=settings.GEMINI_API_KEY)
-    gemini_client = genai.GenerativeModel('gemini-1.5-flash')
+    gemini_client = genai.GenerativeModel('gemini-2.5-flash')
 
     print("✅ All models and indexes loaded successfully.")
     MODELS_LOADED = True
@@ -50,6 +50,7 @@ def search_combined_index(question, top_k=10):
     and returns the most relevant context.
     """
     if not MODELS_LOADED:
+        print("rrrrrrrrrrrrrrrrrrrrrrrrr")
         return "Error: The search indexes are not loaded. Please check server logs."
 
     print(f"\n🔎 Performing combined search for: '{question}'")
@@ -85,6 +86,7 @@ def search_combined_index(question, top_k=10):
         
         relevant_context += content_chunk + "\n---\n"
 
+    # print(f"rcrcrcrcrcrcrrcrcrcrcrcr: {relevant_context}")
     print(f"  -> Found and ranked {top_k} relevant snippets from all sources.")
     return relevant_context
 
@@ -110,32 +112,67 @@ def ask_gemini(context, question, history): # Added 'history' parameter
         # Use 'model' for the bot's role and 'user' for the user's role
         role = "Bot" if turn['role'] == 'model' else "User"
         formatted_history += f"{role}: {turn['parts'][0]}\n"
-
-
+    
+    print(f"context: {context[:12000]}")
+    # print(f"formatted_history: {formatted_history}")
     # --- NEW: Updated prompt that includes the history ---
     full_prompt = (
         f"You are SKIT-Bot, a friendly and helpful AI assistant for Swami Keshvanand Institute of Technology (SKIT).\n\n"
         f"**Your Task:** Act as a conversational chatbot. Use the 'Chat History' to understand follow-up questions and maintain context. Answer the user's 'Current Question' based *only* on the 'Relevant Information' provided.\n\n"
         f"**CRITICAL RULES:**\n"
         f"1. Your knowledge is STRICTLY LIMITED to the provided 'Relevant Information'.\n"
-        f"2. If the 'Relevant Information' does not contain the answer to the 'Current Question', you MUST respond with the exact phrase:\n"
-        f"   'I'm sorry, I can only provide information found on the SKIT website and official documents. I could not find any details regarding your question.'\n"
-        f"3. Do NOT use external knowledge. Refer to the 'Chat History' for context only.\n\n"
+        f"2. Use common sense to extract the answer from the 'Relevant Information' and give the answer in the same language as the question.\n"
+        f"3. Format your response using proper markdown with clear headings, bullet points, and spacing.\n"
+        f"4. For dates, schedules, or lists, use proper markdown formatting with bullet points or numbered lists.\n"
+        f"5. Add line breaks between different sections for better readability.\n"
+        f"6. Do NOT use external knowledge. Refer to the 'Chat History' for context only.\n\n"
         f"--- Chat History ---\n"
         f"{formatted_history}\n"
         f"--- Relevant Information ---\n"
         f"{context[:12000]}\n\n"
         f"--- Current Question ---\n"
         f"{question}\n\n"
-        f"Answer:"
+        f"Answer in well-formatted markdown with proper spacing and structure:\n\n"
     )
 
     try:
+        print("Sending request to Gemini API...")
         response = gemini_client.generate_content(full_prompt)
-        return response.text
+        print(f"Received response: {response}")
+        
+        # Debug: Print all attributes of the response
+        print("Response attributes:", dir(response))
+        
+        # Try different ways to extract the response text based on the API version
+        if hasattr(response, 'text'):
+            print("Using response.text")
+            return response.text
+            
+        if hasattr(response, '_result') and hasattr(response._result, 'text'):
+            print("Using response._result.text")
+            return response._result.text
+            
+        if hasattr(response, 'candidates') and response.candidates:
+            print("Found candidates in response")
+            candidate = response.candidates[0]
+            if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                print("Found parts in candidate content")
+                part = candidate.content.parts[0]
+                if hasattr(part, 'text'):
+                    print("Using candidate.content.parts[0].text")
+                    return part.text
+                    
+        # If we get here, we couldn't find the text in the expected format
+        print(f"Unexpected response format. Full response: {response}")
+        if hasattr(response, 'prompt_feedback'):
+            print(f"Prompt feedback: {response.prompt_feedback}")
+        if hasattr(response, 'candidates'):
+            print(f"Candidates: {response.candidates}")
+            
+        return "I'm sorry, I had trouble understanding the response. Please try again."
     except Exception as e:
         print(f"Error calling Gemini API: {e}")
-        return "I'm sorry, but I'm having trouble connecting to my brain right now. Please try again in a moment."
+        return "I'm sorry, I encountered an error while processing your request. Please try again later."
 
 # In chatbot_app/chatbot_logic.py
 
