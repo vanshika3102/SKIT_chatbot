@@ -1,0 +1,42 @@
+=== SAMPLE CHUNKS FOR INSPECTION ===
+
+Chunk 1 from https://www.skit.ac.in/admissions/frequently-asked-queries.html:
+Home About SKIT Our Inspiration Board of Governance Message Vision, Mission & Quality Policy Institute Organogram Academic Council (Autonomous) Academic & Management Council IQAC Policy of the Institute Perspective Plan Values, Ethics & Code of Conduct Social Responsibility & Gramothan Awards & Recognitions Best Practices Academics Autonomous Programmes Academic Calendar Syllabus MOUs & Collaborations e-SLATE Research Research Projects PhD Supervisors Centers of Excellence Transportation Enginee...
+--------------------------------------------------------------------------------
+
+Chunk 2 from https://www.skit.ac.in/admissions/frequently-asked-queries.html:
+Home About SKIT Our Inspiration Board of Governance Message Vision, Mission & Quality Policy Institute Organogram Academic Council (Autonomous) Academic & Management Council IQAC Policy of the Institute Perspective Plan Values, Ethics & Code of Conduct Social Responsibility & Gramothan Awards & Recognitions Best Practices Academics Autonomous Programmes Academic Calendar Syllabus MOUs & Collaborations e-SLATE Research Research Projects PhD Supervisors Centers of Excellence Transportation Enginee...
+--------------------------------------------------------------------------------
+
+Chunk 3 from https://www.skit.ac.in/admissions/frequently-asked-queries.html:
+Home About SKIT Our Inspiration Board of Governance Message Vision, Mission & Quality Policy Institute Organogram Academic Council (Autonomous) Academic & Management Council IQAC Policy of the Institute Perspective Plan Values, Ethics & Code of Conduct Social Responsibility & Gramothan Awards & Recognitions Best Practices Academics Autonomous Programmes Academic Calendar Syllabus MOUs & Collaborations e-SLATE Research Research Projects PhD Supervisors Centers of Excellence Transportation Enginee...
+--------------------------------------------------------------------------------
+
+Chunk 4 from https://www.skit.ac.in/admissions/frequently-asked-queries.html:
+Ph.D Hostel Facility Education Loan FAQs - Admission FAQs - Hostel Infrastructure Branch Change (2nd Year) Internal Sliding (First Year) NAAC NAAC Certificate AQAR Undertaking IIQA SSR DVV IQAC Accreditation & Approval AICTE Approval RTU Affiliation Letter Accreditation NBA Accreditation NAAC Certificate Ranking NIRF ARIIA 2020 Report Minute of Meetings Board of Governors Academic & Management Council Mandatory Disclosure AISHE Audit Statement AICTE AICTE Reports ERP Student Faculty Feedback Con...
+--------------------------------------------------------------------------------
+
+Chunk 5 from https://www.skit.ac.in/admissions/frequently-asked-queries.html:
+Ph.D Hostel Facility Education Loan FAQs - Admission FAQs - Hostel Infrastructure Branch Change (2nd Year) Internal Sliding (First Year) NAAC NAAC Certificate AQAR Undertaking IIQA SSR DVV IQAC Accreditation & Approval AICTE Approval RTU Affiliation Letter Accreditation NBA Accreditation NAAC Certificate Ranking NIRF ARIIA 2020 Report Minute of Meetings Board of Governors Academic & Management Council Mandatory Disclosure AISHE Audit Statement AICTE AICTE Reports ERP Student Faculty Feedback Con...
+--------------------------------------------------------------------------------
+
+Chunk 6 from https://www.skit.ac.in/admissions/frequently-asked-queries.html:
+1 in Engineering Program in Rajasthan consecutively for the 7th year (2017-18 to 2023-24) by RTU, Kota College Code REAP: 1031, RMAP: 302 Creating Winners for Life.... ☎:Admission Helpline: 8505003008 Admission Cell Timings: 8am-4pm (all working days) | 9am-4 pm (Sunday) | B.Tech Admission Open, click here REAP-2022 Reporting Instructions Departments Basic Sciences and Humanities Civil Engineering Computer Science & Engineering Electronics and Communication Engineering Electrical Engineering Inf...
+--------------------------------------------------------------------------------
+
+Chunk 7 from https://www.skit.ac.in/admissions/frequently-asked-queries.html:
+☎:Admission Helpline: 8505003008 Admission Cell Timings: 8am-4pm (all working days) | 9am-4 pm (Sunday) | B.Tech Admission Open, click here REAP-2022 Reporting Instructions Departments Basic Sciences and Humanities Civil Engineering Computer Science & Engineering Electronics and Communication Engineering Electrical Engineering Information Technology Mechanical Engineering Management Studies Examination Cell Institute Initiatives Incubation Centre E-Cell Universal Human Values e-Yantra IPR Cell I...
+--------------------------------------------------------------------------------
+
+Chunk 8 from https://www.skit.ac.in/admissions/frequently-asked-queries.html:
+A1: SKIT is approved by All India Council for Technical Education (AICTE), New Delhi and Department of Technical Education, Government of Rajasthan, Jaipur. Q2: To which university is SKIT affiliated? A2: SKIT is an institution affiliated to Rajasthan Technical University (RTU), Kota established by the Government of Rajasthan. Q3: Which rank does SKIT hold amongst all the affiliated colleges under RTU, Kota? A3: SKIT holds First Rank (1st Rank in Engineering Programme) in Rajasthan amongst all R...
+--------------------------------------------------------------------------------
+
+Chunk 9 from https://www.skit.ac.in/admissions/frequently-asked-queries.html:
+A3: SKIT holds First Rank (1st Rank in Engineering Programme) in Rajasthan amongst all RTU affiliated colleges for the last 7 consecutive years (2017-18, 2018-19, 2019-20, 2020-21, 2021-22, 2022-23, 2023-24, 2024-25). Q4: Are engineering programmes of SKIT accredited by NBA? A4: Yes, the engineering branches of SKIT are accredited by the National Board of Accreditation (NBA), New Delhi and also by the Institution of Engineers (IE), Kolkata. Q5: Is SKIT accredited by NAAC? A5: Yes, SKIT is the on...
+--------------------------------------------------------------------------------
+
+Chunk 10 from https://www.skit.ac.in/admissions/frequently-asked-queries.html:
+A5: Yes, SKIT is the only technical institute affiliated in Rajasthan to have earned an A++ grade by NAAC in first cycle. Q6: What are the programmes being offered at SKIT? A6: The Institute offers regular Under Graduate (B.Tech.) & Post Graduate (M.Tech.) programmes in engineering, and Post Graduate (MBA) programme in management disciplines. The duration of UG programme is 4 years and PG programme is 2 years. Q7: What in the syllabus for Data Science, Artificial Intelligence and Internet of Thi...
+--------------------------------------------------------------------------------
+

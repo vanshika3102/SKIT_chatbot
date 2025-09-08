@@ -1,26 +1,26 @@
 // static/js/chat_script.js
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Configure marked.js
+    const chatContainer = document.getElementById('chat-container');
+    const form = document.getElementById('input-form');
+    const input = document.getElementById('question-input');
+    const submitBtn = document.getElementById('submit-btn');
+    const clearChatBtn = document.getElementById('clear-chat');
+    const typingIndicator = document.querySelector('.typing-indicator');
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    clearChatBtn.addEventListener('click', clearChat);
     marked.setOptions({
         breaks: true,
         gfm: true,
         headerIds: true,
         mangle: false
     });
-
-    const chatContainer = document.getElementById('chat-container');
-    const form = document.getElementById('input-form');
-    const input = document.getElementById('question-input');
-    const submitBtn = document.getElementById('submit-btn');
-    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     
-    // Process existing messages to render markdown
-    document.querySelectorAll('.bot-message').forEach(el => {
+    document.querySelectorAll('.bot-message:not(.typing-indicator)').forEach(el => {
         el.innerHTML = marked.parse(el.textContent);
     });
 
-    // Scroll to the bottom of the chat on page load
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
     form.addEventListener('submit', async (e) => {
@@ -28,23 +28,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const question = input.value.trim();
         if (!question) return;
 
-        // Display user's message immediately
         addMessage(question, 'user-message');
         input.value = '';
         submitBtn.disabled = true;
-
-        // Create a placeholder for the bot's response
-        const thinkingMessage = addMessage('...', 'bot-message');
+        typingIndicator.style.display = 'flex';
+        chatContainer.scrollTop = chatContainer.scrollHeight;
 
         try {
-            // The fetch URL should match your urls.py
             const response = await fetch('/chat/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': csrfToken
                 },
-                // We only need to send the new message. The server knows the history.
                 body: JSON.stringify({ message: question })
             });
 
@@ -53,33 +49,57 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const data = await response.json();
-            // Update the placeholder with the actual answer and render markdown
-            thinkingMessage.innerHTML = marked.parse(data.answer);
+            addMessage(data.answer, 'bot-message');
 
         } catch (error) {
-            thinkingMessage.textContent = 'Sorry, something went wrong. Please try again.';
+            addMessage('Sorry, something went wrong. Please try again.', 'bot-message');
             console.error('Error:', error);
         } finally {
+            typingIndicator.style.display = 'none';
             submitBtn.disabled = false;
             input.focus();
-            chatContainer.scrollTop = chatContainer.scrollHeight; // Scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
     });
 
     function addMessage(text, className) {
         const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', className);
+        messageDiv.className = `message ${className}`;
         
         if (className === 'bot-message') {
-            // For bot messages, we'll render markdown
             messageDiv.innerHTML = marked.parse(text);
         } else {
-            // For user messages, just use text content
             messageDiv.textContent = text;
         }
         
-        chatContainer.appendChild(messageDiv);
+        chatContainer.insertBefore(messageDiv, typingIndicator);
         chatContainer.scrollTop = chatContainer.scrollHeight;
         return messageDiv;
+    }
+
+    async function clearChat() {
+        if (!confirm('Are you sure you want to clear the chat and start a new conversation?')) {
+            return;
+        }
+
+        try {
+            chatContainer.innerHTML = '';
+            chatContainer.appendChild(typingIndicator); // Re-add the typing indicator
+            
+            addMessage('Hello! How can I help you with information about SKIT today?', 'bot-message');
+            
+            await fetch('/clear-chat/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                }
+            });
+            
+            input.focus();
+        } catch (error) {
+            console.error('Error clearing chat:', error);
+            alert('There was an error clearing the chat. Please try again.');
+        }
     }
 });

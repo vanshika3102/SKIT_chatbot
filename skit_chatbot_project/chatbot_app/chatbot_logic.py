@@ -44,13 +44,12 @@ except Exception as e:
 
 
 # --- NEW: Combined Search Function ---
-def search_combined_index(question, top_k=10):
+def search_combined_index(question, top_k=15):
     """
     Searches BOTH the web and PDF indexes, combines the results, re-ranks them,
     and returns the most relevant context.
     """
     if not MODELS_LOADED:
-        print("rrrrrrrrrrrrrrrrrrrrrrrrr")
         return "Error: The search indexes are not loaded. Please check server logs."
 
     print(f"\n🔎 Performing combined search for: '{question}'")
@@ -86,7 +85,6 @@ def search_combined_index(question, top_k=10):
         
         relevant_context += content_chunk + "\n---\n"
 
-    # print(f"rcrcrcrcrcrcrrcrcrcrcrcr: {relevant_context}")
     print(f"  -> Found and ranked {top_k} relevant snippets from all sources.")
     return relevant_context
 
@@ -113,8 +111,6 @@ def ask_gemini(context, question, history): # Added 'history' parameter
         role = "Bot" if turn['role'] == 'model' else "User"
         formatted_history += f"{role}: {turn['parts'][0]}\n"
     
-    print(f"context: {context[:12000]}")
-    # print(f"formatted_history: {formatted_history}")
     # --- NEW: Updated prompt that includes the history ---
     full_prompt = (
         f"You are SKIT-Bot, a friendly and helpful AI assistant for Swami Keshvanand Institute of Technology (SKIT).\n\n"
@@ -141,7 +137,7 @@ def ask_gemini(context, question, history): # Added 'history' parameter
         print(f"Received response: {response}")
         
         # Debug: Print all attributes of the response
-        print("Response attributes:", dir(response))
+        # print("Response attributes:", dir(response))
         
         # Try different ways to extract the response text based on the API version
         if hasattr(response, 'text'):
@@ -200,7 +196,8 @@ def rewrite_query_with_history(question, history):
         f"**RULES:**\n"
         f"1. If the 'Follow-up Question' is already a complete and understandable question on its own, simply return it as is.\n"
         f"2. Otherwise, use the context from the 'Chat History' to resolve pronouns (like 'it', 'they', 'them') and ambiguous phrases.\n"
-        f"3. The output MUST be only the rewritten question and nothing else.\n\n"
+        f"3. Use SKIT as college name in query, even if user provide the full name, rewrite it as SKIT"
+        f"4. The output MUST be only the rewritten question and nothing else.\n\n"
         f"--- Chat History ---\n"
         f"{formatted_history}\n"
         f"--- Follow-up Question ---\n"

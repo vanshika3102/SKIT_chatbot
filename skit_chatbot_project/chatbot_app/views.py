@@ -27,7 +27,7 @@ def chat_view(request):
             
             # 2. Search the index with the rewritten query
             context = chatbot_logic.search_combined_index(standalone_question)
-
+            # print(f"context:{context}")
             # print(f"qqqqqqqqqqqqqqqq:{context}")
             # 3. Get the final answer from Gemini, providing the original question and history
             answer = chatbot_logic.ask_gemini(context, user_question, history)
@@ -52,3 +52,11 @@ def chat_view(request):
         return render(request, 'chatbot_app/chat.html', {
             'chat_history': chat_history
         })
+
+def clear_chat(request):
+    """View to clear the chat history."""
+    if request.method == 'POST':
+        # Clear the chat history from the session
+        request.session['chat_history'] = []
+        return JsonResponse({'status': 'success', 'message': 'Chat history cleared'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
